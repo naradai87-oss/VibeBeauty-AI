@@ -32,8 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="antialiased font-sans text-vibe-charcoal selection:bg-vibe-primary/20">
-        {/* --- GLOBAL HEADER --- */}
-        <header className="fixed top-0 left-0 right-0 z-[999] px-8 py-6 flex items-center justify-between bg-vibe-cream/80 backdrop-blur-md border-b border-vibe-silver/10">
+        <main>
+          {children}
+        </main>
+
+        {/* --- GLOBAL HEADER (Placed last for stacking) --- */}
+        <header className="fixed top-0 left-0 right-0 z-[9999] px-8 py-6 flex items-center justify-between bg-vibe-cream/90 backdrop-blur-xl border-b border-vibe-silver/20 shadow-sm">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 luxury-glass rounded-apple-md flex items-center justify-center transition-transform group-hover:scale-110">
@@ -54,9 +58,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
         </header>
-
-        <AmbientBackground />
-        {children}
       </body>
     </html>
   )
