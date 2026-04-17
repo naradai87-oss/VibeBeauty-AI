@@ -5,32 +5,11 @@ import LandingHero from '@/components/landing/LandingHero'
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white relative">
-      {/* --- HEADER NAVIGATION --- */}
-      <header className="fixed top-0 left-0 right-0 z-[999] px-8 py-6 flex items-center justify-between bg-vibe-cream/80 backdrop-blur-md border-b border-vibe-silver/10">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 luxury-glass rounded-apple-md flex items-center justify-center">
-            <Sparkles size={16} className="text-vibe-primary" />
-          </div>
-          <span className="heading-serif italic text-lg text-vibe-charcoal tracking-wider">VibeBeauty</span>
-        </div>
-        
-        <div className="flex items-center gap-6">
-          <Link href="/login" prefetch={false} className="text-xs font-bold text-vibe-slate/60 hover:text-vibe-primary uppercase tracking-widest transition-colors">
-            로그인
-          </Link>
-          <Link href="/signup" prefetch={false}>
-            <button className="px-5 py-2.5 bg-vibe-charcoal text-white rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-vibe-primary transition-all shadow-luxury">
-              시작하기
-            </button>
-          </Link>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white pt-20">
       {/* --- HERO SECTION --- */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden z-10">
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         {/* Hero Image Background */}
-        <div className="absolute inset-0 z-0 scale-100">
+        <div className="absolute inset-0 z-0">
           <Image 
             src="/hero-beauty.png" 
             alt="Premium Beauty"
@@ -43,13 +22,13 @@ export default function LandingPage() {
         </div>
 
         {/* Hero Content Overlay */}
-        <div className="relative z-50">
+        <div className="relative z-10 w-full flex justify-center">
           <LandingHero />
         </div>
       </section>
 
       {/* --- FEATURES SECTION --- */}
-      <section className="px-6 py-32 max-w-6xl mx-auto relative z-[90]">
+      <section className="px-6 py-32 max-w-6xl mx-auto relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
             {
@@ -95,7 +74,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-[90]">
+      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-20">
         <div className="flex flex-col items-center space-y-10">
           <div className="flex items-center gap-3 opacity-40">
             <Sparkles className="w-6 h-6 text-vibe-primary" />
