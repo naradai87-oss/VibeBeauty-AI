@@ -12,7 +12,7 @@ const VIBE_CARDS = [
     id: 'mz_ghibli',
     label: 'MZ 지브리',
     emoji: '🌿',
-    desc: 'Pure & Natural',
+    desc: '청순 & 내추럴',
     gradient: 'from-[#E0F2F1] to-[#B2DFDB]',
     span: 'col-span-2 row-span-2'
   },
@@ -20,7 +20,7 @@ const VIBE_CARDS = [
     id: 'business',
     label: '비즈니스',
     emoji: '💼',
-    desc: 'Sharp & Chic',
+    desc: '샤프 & 시크',
     gradient: 'from-[#F1F5F9] to-[#E2E8F0]',
     span: 'col-span-1 row-span-1'
   },
@@ -28,7 +28,7 @@ const VIBE_CARDS = [
     id: 'trendy',
     label: '트렌디',
     emoji: '🔥',
-    desc: 'Hip & Bold',
+    desc: '힙 & 볼드',
     gradient: 'from-[#FFF1F2] to-[#FFE4E6]',
     span: 'col-span-1 row-span-1'
   },
@@ -64,9 +64,9 @@ export default function DashboardPage() {
       {/* --- TOP NAVIGATION / HEADER --- */}
       <header className="px-6 pt-12 pb-6 flex items-center justify-between sticky top-0 z-20 bg-vibe-cream/80 backdrop-blur-md">
         <div>
-          <p className="text-vibe-slate/40 text-[10px] font-bold tracking-widest uppercase mb-1">Exclusive Access</p>
+          <p className="text-vibe-slate/40 text-[10px] font-bold tracking-widest uppercase mb-1">프리미엄 액세스</p>
           <h1 className="heading-serif text-3xl text-vibe-charcoal font-medium">
-            Velvet {profile?.nickname?.split(' ')[0] ?? 'User'}
+            벨벳(Velvet) {profile?.nickname?.split(' ')[0] ?? 'Queen'}
           </h1>
         </div>
 
@@ -95,7 +95,7 @@ export default function DashboardPage() {
             <div className="relative z-10 flex flex-col items-start gap-4">
               <span className="bg-white/10 px-3 py-1 rounded-full text-[10px] font-bold tracking-tighter text-white/60 flex items-center gap-1.5 uppercase">
                 <Sparkles size={10} className="text-vibe-gold" />
-                Special Edition Analysis
+                스페셜 에디션 분석
               </span>
               <h2 className="heading-serif text-white text-3xl leading-snug">
                 감추어진 <br />
@@ -107,7 +107,7 @@ export default function DashboardPage() {
                 onClick={() => router.push('/capture')}
                 className="mt-4 flex items-center gap-2 text-vibe-accent font-bold text-sm tracking-wide"
               >
-                Go to Analysis <ChevronRight size={16} />
+                분석 시작하기 <ChevronRight size={16} />
               </motion.button>
             </div>
 
@@ -120,8 +120,8 @@ export default function DashboardPage() {
         {/* --- MOOD SELECTION (BENTO GRID) --- */}
         <section>
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-vibe-charcoal font-bold text-lg tracking-tight">Select Your Mood</h3>
-            <span className="text-vibe-slate/30 text-xs font-medium">Refresh Moods</span>
+            <h3 className="text-vibe-charcoal font-bold text-lg tracking-tight">오늘의 무드 선택</h3>
+            <span className="text-vibe-slate/30 text-xs font-medium">무드 새로고침</span>
           </div>
 
           <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[400px]">
@@ -163,7 +163,7 @@ export default function DashboardPage() {
               <Star className="text-vibe-gold" />
             </div>
             <div>
-              <h5 className="text-vibe-charcoal font-bold text-sm mb-0.5 tracking-tight">Expert Styling Tip</h5>
+              <h5 className="text-vibe-charcoal font-bold text-sm mb-0.5 tracking-tight">전문가 스타일링 팁</h5>
               <p className="text-vibe-slate/50 text-[11px] leading-relaxed">
                 어두운 배경보다 밝은 실내에서 촬영 시 <br />
                 인공지능의 피부톤 분석 오차가 12% 감소합니다.
