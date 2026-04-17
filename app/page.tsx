@@ -7,8 +7,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white pt-20">
       {/* --- HERO SECTION --- */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden border-4 border-red-500">
-        {/* Hero Image Background (HIDDEN FOR TESTING)
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Hero Image Background */}
         <div className="absolute inset-0 z-0">
           <Image 
             src="/hero-beauty.png" 
@@ -17,20 +17,20 @@ export default function LandingPage() {
             className="object-cover opacity-90 brightness-[1.05]"
             priority
           />
+          {/* Refined Overlays */}
           <div className="absolute inset-0 bg-gradient-to-b from-vibe-cream/40 via-transparent to-vibe-cream z-[1]" />
-          <div className="absolute inset-0 bg-white/5 z-[2]" />
+          <div className="absolute inset-0 bg-white/5 z-[2] backdrop-blur-[2px]" />
         </div>
-        */}
 
-        {/* Hero Content Overlay */}
-        <div className="relative z-50 w-full flex justify-center bg-black/10">
+        {/* Hero Content Overlay - Explicitly on top */}
+        <div className="relative z-10 w-full flex justify-center">
           <LandingHero />
         </div>
       </section>
 
       {/* --- FEATURES SECTION --- */}
       <section className="px-6 py-32 max-w-6xl mx-auto relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {[
             {
               icon: Sparkles,
@@ -58,8 +58,8 @@ export default function LandingPage() {
             }
           ].map((feature, i) => (
             <Link href={feature.href} key={i} prefetch={false} className="group">
-              <div className="p-12 rounded-apple-xl border border-vibe-silver/30 bg-white shadow-luxury-lg flex flex-col items-center text-center space-y-8 h-full cursor-pointer transition-all duration-300 hover:-translate-y-2">
-                <div className={`w-20 h-20 ${feature.bgColor} rounded-apple-lg flex items-center justify-center shadow-inner`}>
+              <div className="p-12 rounded-apple-xl border border-vibe-silver/30 bg-white/70 backdrop-blur-md shadow-luxury-lg flex flex-col items-center text-center space-y-8 h-full cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:border-vibe-primary/20">
+                <div className={`w-20 h-20 ${feature.bgColor} rounded-apple-lg flex items-center justify-center shadow-inner transition-transform group-hover:scale-110`}>
                   <feature.icon className={`w-10 h-10 ${feature.iconColor}`} />
                 </div>
                 <div className="space-y-4">

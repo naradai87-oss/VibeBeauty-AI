@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import AmbientBackground from '@/components/shared/AmbientBackground'
 import './globals.css'
+import { Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -25,13 +27,12 @@ export const viewport = {
   themeColor: '#1E293B',
 }
 
-import { Sparkles } from 'lucide-react'
-import Link from 'next/link'
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="antialiased font-sans text-vibe-charcoal selection:bg-vibe-primary/20">
+        <AmbientBackground />
+        
         <main>
           {children}
         </main>
