@@ -101,9 +101,9 @@ export default function LandingPage() {
           </div>
           
           <div className="flex gap-10 text-[10px] font-black text-vibe-slate/40 tracking-[0.2em] uppercase">
-            <a href="/terms" className="hover:text-vibe-primary transition-colors">Terms</a>
-            <a href="/privacy" className="hover:text-vibe-primary transition-colors">Privacy</a>
-            <a href="/partners" className="hover:text-vibe-primary transition-colors">Partners</a>
+            <Link href="/terms" prefetch={false} className="hover:text-vibe-primary transition-colors">Terms</Link>
+            <Link href="/privacy" prefetch={false} className="hover:text-vibe-primary transition-colors">Privacy</Link>
+            <Link href="/partners" prefetch={false} className="hover:text-vibe-primary transition-colors">Partners</Link>
           </div>
           
           <p className="text-[10px] text-vibe-slate/30 tracking-[0.3em] font-medium">
