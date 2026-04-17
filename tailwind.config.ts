@@ -40,12 +40,6 @@ const config: Config = {
         'glow-violet': '0 0 30px rgba(139, 92, 246, 0.25)',
         'inner-light': 'inset 0 1px 0 rgba(255, 255, 255, 0.6)',
       },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
-        'shimmer': 'shimmer 2.5s linear infinite',
-        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
-      },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
@@ -62,6 +56,28 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'orb-float-1': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(100px, -50px) scale(1.2)' },
+          '66%': { transform: 'translate(-50px, 50px) scale(0.9)' },
+        },
+        'orb-float-2': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%': { transform: 'translate(-80px, 100px) scale(1.1)' },
+        },
+        'orb-float-3': {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(50px, 80px)' },
+        },
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
+        'shimmer': 'shimmer 2.5s linear infinite',
+        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+        'orb-1': 'orb-float-1 20s ease-in-out infinite',
+        'orb-2': 'orb-float-2 25s ease-in-out infinite',
+        'orb-3': 'orb-float-3 18s ease-in-out infinite',
       },
     },
   },
