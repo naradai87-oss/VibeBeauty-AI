@@ -25,8 +25,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'SF Pro Display', '-apple-system', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['var(--font-inter)', 'Inter', 'SF Pro Display', '-apple-system', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'Playfair Display', 'serif'],
       },
       borderRadius: {
         'apple-sm': '14px',
