@@ -1,3 +1,5 @@
+'use client'
+
 export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-vibe-cream flex items-center justify-center p-8">
