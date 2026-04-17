@@ -5,10 +5,10 @@ import { Home, BookOpen, ShoppingBag, User } from 'lucide-react'
 import { motion } from 'motion/react'
 
 const NAV_ITEMS = [
-  { icon: Home,       label: '홈',       path: '/dashboard' },
-  { icon: BookOpen,   label: '스타일 로그', path: '/style-log' },
-  { icon: ShoppingBag,label: '스토어',    path: '/shop' },
-  { icon: User,       label: '마이페이지', path: '/mypage' },
+  { icon: Home, label: '홈', path: '/dashboard' },
+  { icon: BookOpen, label: '스타일 로그', path: '/style-log' },
+  { icon: ShoppingBag, label: '스토어', path: '/shop' },
+  { icon: User, label: '마이페이지', path: '/mypage' },
 ]
 
 export default function BottomNav() {
@@ -19,7 +19,7 @@ export default function BottomNav() {
   // 불필요한 null 반환은 레이아웃 시프트를 유발할 수 있습니다.
 
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg z-50 px-6 pb-8">
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg z-[100] px-6 pb-8">
       <div className="luxury-glass rounded-apple-xl shadow-luxury-lg border-white/60 px-4 py-4">
         <div className="flex items-center justify-around">
           {NAV_ITEMS.map(item => {
@@ -41,13 +41,11 @@ export default function BottomNav() {
                 )}
                 <Icon
                   size={20}
-                  className={`relative z-10 transition-colors duration-400 ${
-                    isActive ? 'text-vibe-primary' : 'text-vibe-slate/30'
-                  }`}
+                  className={`relative z-10 transition-colors duration-400 ${isActive ? 'text-vibe-primary' : 'text-vibe-slate/30'
+                    }`}
                 />
-                <span className={`relative z-10 text-[9px] font-bold uppercase tracking-widest transition-colors duration-400 ${
-                  isActive ? 'text-vibe-primary' : 'text-vibe-slate/30'
-                }`}>
+                <span className={`relative z-10 text-[9px] font-bold uppercase tracking-widest transition-colors duration-400 ${isActive ? 'text-vibe-primary' : 'text-vibe-slate/30'
+                  }`}>
                   {item.label}
                 </span>
               </button>
