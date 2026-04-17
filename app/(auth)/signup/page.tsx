@@ -29,6 +29,7 @@ export default function SignupPage() {
       email: form.email,
       password: form.password,
       options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           nickname: form.nickname,
           referred_by: form.referralCode || null,

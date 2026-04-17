@@ -17,23 +17,50 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  const [resending, setResending] = useState(false)
+  const [resendStatus, setResendStatus] = useState('')
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setResendStatus('')
 
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       if (error.message.includes('Email not confirmed')) {
         setError('이메일 인증이 필요합니다. 메일함을 확인해주세요.')
+      } else if (error.message.includes('Invalid login credentials')) {
+        setError('이메일 또는 비밀번호가 올바르지 않습니다.')
       } else {
-        setError('가입 정보가 올바르지 않습니다.')
+        setError(error.message)
       }
     } else {
       router.push('/dashboard')
       router.refresh()
     }
     setLoading(false)
+  }
+
+  async function handleResendVerification() {
+    if (!email) {
+      setError('이메일을 먼저 입력해주세요.')
+      return
+    }
+    setResending(true)
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      }
+    })
+    if (error) {
+      setError(error.message)
+    } else {
+      setResendStatus('인증 메일이 재발송되었습니다.')
+    }
+    setResending(false)
   }
 
   return (
@@ -98,8 +125,27 @@ export default function LoginPage() {
 
             {error && (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                className="text-red-500 text-xs font-bold text-center bg-red-50/50 py-3 rounded-apple-md border border-red-100 uppercase tracking-tight">
-                {error}
+                className="space-y-3">
+                <div className="text-red-500 text-xs font-bold text-center bg-red-50/50 py-3 rounded-apple-md border border-red-100 uppercase tracking-tight">
+                  {error}
+                </div>
+                {error.includes('이메일 인증') && (
+                  <button
+                    type="button"
+                    onClick={handleResendVerification}
+                    disabled={resending}
+                    className="w-full text-[10px] font-bold text-vibe-primary hover:text-vibe-primary/80 uppercase tracking-widest text-center"
+                  >
+                    {resending ? '발송 중...' : '인증 메일 다시 받기'}
+                  </button>
+                )}
+              </motion.div>
+            )}
+
+            {resendStatus && (
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                className="text-vibe-primary text-xs font-bold text-center bg-vibe-primary/5 py-3 rounded-apple-md border border-vibe-primary/10">
+                {resendStatus}
               </motion.div>
             )}
 
