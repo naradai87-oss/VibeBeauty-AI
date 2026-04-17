@@ -2,7 +2,11 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request })
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,44 +16,55 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
-          cookiesToSet.forEach(({ name, value }) =>
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
             request.cookies.set(name, value)
           )
-          supabaseResponse = NextResponse.next({ request })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            response.cookies.set(name, value, options)
           )
         },
       },
     }
   )
 
+  // IMPORTANT: getUser() is required to validate the session and set the cookies correctly
   const { data: { user } } = await supabase.auth.getUser()
 
-  const isAuthPage = request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/signup')
-
-  const isProtected = request.nextUrl.pathname.startsWith('/dashboard') ||
-    request.nextUrl.pathname.startsWith('/capture') ||
-    request.nextUrl.pathname.startsWith('/report') ||
-    request.nextUrl.pathname.startsWith('/ar-mirror') ||
-    request.nextUrl.pathname.startsWith('/style-log') ||
-    request.nextUrl.pathname.startsWith('/growth') ||
-    request.nextUrl.pathname.startsWith('/shop') ||
-    request.nextUrl.pathname.startsWith('/mypage')
+  const { pathname } = request.nextUrl
+  const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup')
+  
+  // 보호된 경로 목록
+  const protectedRoutes = [
+    '/dashboard', '/capture', '/report', '/ar-mirror', 
+    '/style-log', '/growth', '/shop', '/mypage'
+  ]
+  const isProtected = protectedRoutes.some(route => pathname.startsWith(route))
 
   if (!user && isProtected) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    // 세션이 없는데 보호된 페이지에 접근하면 로그인 페이지로 리다이렉트
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
   }
 
   if (user && isAuthPage) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    // 세션이 있는데 로그인/회원가입 페이지에 접근하면 대시보드로 리다이렉트
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect(url)
   }
 
-  return supabaseResponse
+  return response
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 }
