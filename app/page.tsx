@@ -16,10 +16,10 @@ export default function LandingPage() {
         </div>
         
         <div className="flex items-center gap-6">
-          <Link href="/login" className="text-xs font-bold text-vibe-slate/60 hover:text-vibe-primary uppercase tracking-widest transition-colors">
+          <Link href="/login" prefetch={false} className="text-xs font-bold text-vibe-slate/60 hover:text-vibe-primary uppercase tracking-widest transition-colors">
             로그인
           </Link>
-          <Link href="/signup">
+          <Link href="/signup" prefetch={false}>
             <button className="px-5 py-2.5 bg-vibe-charcoal text-white rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-vibe-primary transition-all shadow-luxury">
               시작하기
             </button>
@@ -47,7 +47,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- FEATURES SECTION --- */}
-      <section className="px-6 py-32 max-w-6xl mx-auto relative z-50">
+      <section className="px-6 py-32 max-w-6xl mx-auto relative z-[60]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
             {
@@ -75,7 +75,7 @@ export default function LandingPage() {
               href: "/signup"
             }
           ].map((feature, i) => (
-            <Link href={feature.href} key={i} className="group">
+            <Link href={feature.href} key={i} prefetch={false} className="group">
               <div className="p-12 rounded-apple-xl border border-vibe-silver/30 bg-white shadow-luxury-lg flex flex-col items-center text-center space-y-8 h-full cursor-pointer transition-transform duration-500 hover:-translate-y-2">
                 <div className={`w-20 h-20 ${feature.bgColor} rounded-apple-lg flex items-center justify-center shadow-inner`}>
                   <feature.icon className={`w-10 h-10 ${feature.iconColor}`} />
@@ -93,7 +93,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-50">
+      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-[60]">
         <div className="flex flex-col items-center space-y-10">
           <div className="flex items-center gap-3 opacity-40">
             <Sparkles className="w-6 h-6 text-vibe-primary" />
@@ -101,9 +101,9 @@ export default function LandingPage() {
           </div>
           
           <div className="flex gap-10 text-[10px] font-black text-vibe-slate/40 tracking-[0.2em] uppercase">
-            <Link href="/terms" className="hover:text-vibe-primary transition-colors">Terms</Link>
-            <Link href="/privacy" className="hover:text-vibe-primary transition-colors">Privacy</Link>
-            <Link href="/partners" className="hover:text-vibe-primary transition-colors">Partners</Link>
+            <a href="/terms" className="hover:text-vibe-primary transition-colors">Terms</a>
+            <a href="/privacy" className="hover:text-vibe-primary transition-colors">Privacy</a>
+            <a href="/partners" className="hover:text-vibe-primary transition-colors">Partners</a>
           </div>
           
           <p className="text-[10px] text-vibe-slate/30 tracking-[0.3em] font-medium">

@@ -44,7 +44,7 @@ export default function LandingHero() {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="flex flex-col items-center gap-8"
       >
-        <Link href="/signup" className="w-full max-w-xs">
+        <Link href="/signup" prefetch={false} className="w-full max-w-xs">
           <button className="btn-premium w-full group flex items-center justify-center gap-4 py-6 shadow-glow-primary">
             <span className="text-sm uppercase tracking-[0.3em] font-black">무료 분석 시작하기</span>
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
