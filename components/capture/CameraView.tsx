@@ -72,7 +72,17 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
     )
     ctx.stroke()
     
-    // 2) 어깨 라인 (Quadratic Curve)
+    // 2) 수직 중앙선 (Center Line)
+    ctx.setLineDash([2, 4])
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'
+    ctx.beginPath()
+    ctx.moveTo(50 * scaleX, 0)
+    ctx.lineTo(50 * scaleX, 133 * scaleY)
+    ctx.stroke()
+    
+    // 3) 어깨 라인 (Quadratic Curve)
+    ctx.strokeStyle = vibeColor
+    ctx.setLineDash([5, 5])
     ctx.beginPath()
     ctx.moveTo(18 * scaleX, 90 * scaleY)
     ctx.quadraticCurveTo(50 * scaleX, 68 * scaleY, 82 * scaleX, 90 * scaleY)
@@ -98,9 +108,14 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
       />
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* 얼굴+어깨 가이드 오버레이 */}
+      {/* 얼굴+어깨 가이드 오버레이 (미러 모드 대응) */}
       {ready && (
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 133" preserveAspectRatio="none">
+        <svg 
+          className="absolute inset-0 w-full h-full pointer-events-none" 
+          viewBox="0 0 100 133" 
+          preserveAspectRatio="none"
+          style={{ transform: facingMode === 'user' ? 'scaleX(-1)' : 'none' }}
+        >
           {/* 반투명 마스크 */}
           <defs>
             <mask id="guide-mask">
@@ -109,18 +124,21 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
               <path d="M18 90 Q50 68 82 90 L82 133 L18 133 Z" fill="black" />
             </mask>
           </defs>
-          <rect width="100" height="133" fill="rgba(0,0,0,0.45)" mask="url(#guide-mask)" />
+          <rect width="100" height="133" fill="rgba(0,0,0,0.55)" mask="url(#guide-mask)" />
+
+          {/* 수직 중앙 정렬선 (추가 가이드) */}
+          <line x1="50" y1="0" x2="50" y2="133" stroke="white" strokeWidth="0.1" strokeDasharray="1 2" opacity="0.3" />
 
           {/* 가이드 테두리 */}
           <motion.ellipse
             cx="50" cy="38" rx="22" ry="28"
-            fill="none" stroke={vibeColor} strokeWidth="0.8" strokeDasharray="3 2"
-            animate={{ opacity: [0.6, 1, 0.6] }}
+            fill="none" stroke={vibeColor} strokeWidth="1" strokeDasharray="3 2"
+            animate={{ opacity: [0.6, 1, 0.6], strokeWidth: [1, 1.5, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
           <motion.path
             d="M18 90 Q50 68 82 90"
-            fill="none" stroke={vibeColor} strokeWidth="0.8" strokeDasharray="3 2"
+            fill="none" stroke={vibeColor} strokeWidth="1" strokeDasharray="3 2"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
           />

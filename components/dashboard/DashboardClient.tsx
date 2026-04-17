@@ -66,37 +66,47 @@ export default function DashboardClient({ profile }: Props) {
         </motion.button>
       </header>
 
-      <main className="px-6 space-y-8 animate-fade-in-up">
-        {/* --- HERO STATUS CARD --- */}
+      <main className="px-6 space-y-12 animate-fade-in-up pb-12">
+        {/* --- PREMIUM HERO BANNER --- */}
         <section>
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="luxury-glass-dark p-8 rounded-apple-lg relative overflow-hidden group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative h-64 rounded-[32px] overflow-hidden shadow-luxury-lg group cursor-pointer"
+            onClick={() => router.push('/capture')}
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-vibe-primary/20 blur-[60px] rounded-full group-hover:bg-vibe-primary/40 transition-colors" />
-            
-            <div className="relative z-10 flex flex-col items-start gap-4">
-              <span className="bg-white/10 px-3 py-1 rounded-full text-[10px] font-bold tracking-tighter text-white/60 flex items-center gap-1.5 uppercase">
-                <Sparkles size={10} className="text-vibe-gold" />
-                스페셜 에디션 분석
-              </span>
-              <h2 className="heading-serif text-white text-3xl leading-snug">
-                감추어진 <br />
-                나만의 무드 찾기
-              </h2>
-              
-              <motion.button
-                whileHover={{ x: 5 }}
-                onClick={() => router.push('/capture')}
-                className="mt-4 flex items-center gap-2 text-vibe-accent font-bold text-sm tracking-wide"
-              >
-                분석 시작하기 <ChevronRight size={16} />
-              </motion.button>
+            {/* Background Image (Generated Premium Asset) */}
+            <div className="absolute inset-0">
+              <img 
+                src="/premium_beauty_dashboard_banner_1776444451087.png" 
+                alt="Premium Aesthetic" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-vibe-charcoal/80 via-vibe-charcoal/40 to-transparent" />
             </div>
 
-            <div className="absolute bottom-6 right-6 opacity-20 group-hover:opacity-40 transition-opacity">
-              <Camera size={80} className="text-white" />
+            <div className="relative z-10 h-full p-8 flex flex-col justify-center items-start space-y-4">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+                <Sparkles size={12} className="text-vibe-gold" />
+                <span className="text-[9px] font-bold tracking-[0.2em] text-white uppercase">Elite AI Experience</span>
+              </div>
+              
+              <div className="space-y-1">
+                <h2 className="heading-serif text-white text-3xl leading-tight">
+                  나만의 <span className="italic">시그니처</span> <br />
+                  무드를 발견하세요
+                </h2>
+                <p className="text-white/60 text-[10px] font-medium tracking-wide">
+                  AI 기반 초정밀 퍼스널 컬러 & 체형 분석 서비스
+                </p>
+              </div>
+
+              <motion.div
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-2 text-vibe-primary font-bold text-xs tracking-[0.2em] uppercase pt-2"
+              >
+                Analysis Start <ChevronRight size={14} />
+              </motion.div>
             </div>
           </motion.div>
         </section>
@@ -108,7 +118,7 @@ export default function DashboardClient({ profile }: Props) {
             <span className="text-vibe-slate/30 text-xs font-medium">무드 새로고침</span>
           </div>
 
-          <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[400px]">
+          <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[440px]">
             {VIBE_CARDS.map((card, i) => (
               <motion.button
                 key={card.id}
@@ -117,23 +127,39 @@ export default function DashboardClient({ profile }: Props) {
                 transition={{ delay: i * 0.1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleVibeSelect(card.id)}
-                className={`relative overflow-hidden rounded-apple-lg p-6 flex flex-col justify-between text-left group transition-all duration-500 shadow-luxury hover:shadow-luxury-lg ${card.gradient} ${card.span}`}
+                className={`relative overflow-hidden rounded-[24px] p-7 flex flex-col justify-between text-left group transition-all duration-500 shadow-luxury hover:shadow-luxury-lg ${card.gradient} ${card.span}`}
               >
+                {/* 배경 이미지 (MZ 지브리 전용) */}
+                {card.id === 'mz_ghibli' && (
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src="/mz_ghibli_style_bg_1776444472020.png" 
+                      alt="Ghibli Vibe" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  </div>
+                )}
+
                 {/* Subtle Grain Overlay */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
                 
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="text-3xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-500">
+                  <div className={`w-12 h-12 luxury-glass rounded-2xl flex items-center justify-center text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ${card.id === 'mz_ghibli' ? 'bg-white/20 border-white/30' : ''}`}>
                     {card.emoji}
-                  </span>
-                  <div className="luxury-glass px-2.5 py-1 rounded-full text-[10px] font-bold text-vibe-slate/60 flex items-center gap-1">
-                    <Diamond size={10} /> 5
+                  </div>
+                  <div className={`luxury-glass px-3 py-1.5 rounded-full text-[9px] font-black flex items-center gap-1.5 ${card.id === 'mz_ghibli' ? 'bg-white/20 text-white border-white/30' : 'text-vibe-slate/60'}`}>
+                    <Diamond size={10} className={card.id === 'mz_ghibli' ? 'text-vibe-gold' : 'text-vibe-primary'} /> 5
                   </div>
                 </div>
 
                 <div className="relative z-10">
-                  <p className="text-vibe-charcoal/40 text-[10px] font-extrabold tracking-widest uppercase mb-0.5">{card.desc}</p>
-                  <h4 className="text-vibe-charcoal font-bold text-xl tracking-tight">{card.label}</h4>
+                  <p className={`text-[9px] font-black tracking-[0.2em] uppercase mb-1 ${card.id === 'mz_ghibli' ? 'text-white/60' : 'text-vibe-charcoal/40'}`}>
+                    {card.desc}
+                  </p>
+                  <h4 className={`font-bold text-2xl tracking-tight ${card.id === 'mz_ghibli' ? 'text-white' : 'text-vibe-charcoal'}`}>
+                    {card.label}
+                  </h4>
                 </div>
               </motion.button>
             ))}
