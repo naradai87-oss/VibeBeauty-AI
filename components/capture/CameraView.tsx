@@ -52,6 +52,33 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
       ctx.scale(-1, 1)
     }
     ctx.drawImage(videoRef.current, 0, 0)
+    
+    // --- AR 가이드 그리기 (캔버스에 직접 렌더링) ---
+    const scaleX = canvas.width / 100
+    const scaleY = canvas.height / 133
+    
+    ctx.strokeStyle = vibeColor
+    ctx.lineWidth = 2 * (canvas.width / 400) // 캔버스 크기에 비례하는 두께
+    ctx.setLineDash([5, 5])
+    
+    // 1) 얼굴 타원 (Ellipse)
+    ctx.beginPath()
+    ctx.ellipse(
+      50 * scaleX, 
+      38 * scaleY, 
+      22 * scaleX, 
+      28 * scaleY, 
+      0, 0, Math.PI * 2
+    )
+    ctx.stroke()
+    
+    // 2) 어깨 라인 (Quadratic Curve)
+    ctx.beginPath()
+    ctx.moveTo(18 * scaleX, 90 * scaleY)
+    ctx.quadraticCurveTo(50 * scaleX, 68 * scaleY, 82 * scaleX, 90 * scaleY)
+    ctx.stroke()
+    // --- AR 가이드 종료 ---
+
     canvas.toBlob(blob => {
       if (!blob) return
       const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' })
