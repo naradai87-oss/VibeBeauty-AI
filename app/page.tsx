@@ -31,24 +31,24 @@ export default function LandingPage() {
           >
             <Star className="w-3.5 h-3.5 text-vibe-gold fill-vibe-gold" />
             <span className="text-[10px] font-bold tracking-[0.2em] text-vibe-slate uppercase">
-              The Evolution of Personal Style
+              퍼스널 스타일의 진화 (나만의 스타일 변화)
             </span>
           </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="heading-serif text-7xl md:text-9xl font-light text-vibe-charcoal leading-[1.05] mb-10 tracking-tight"
           >
-            Find Your <br />
-            <span className="italic gradient-text font-medium">Vibe</span>
+            당신만의 <br />
+            <span className="italic gradient-text font-medium">분위기</span>를 찾으세요
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
             className="text-lg md:text-xl text-vibe-slate/70 max-w-xl mx-auto leading-relaxed mb-12 font-light"
           >
             당신만을 위해 설계된 업계 최고 수준의 <br className="hidden md:block" />
@@ -58,7 +58,7 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
             className="flex flex-col items-center gap-6"
           >
             <Link href="/signup" className="w-full max-w-xs">
@@ -82,38 +82,43 @@ export default function LandingPage() {
             {
               icon: Sparkles,
               title: "AI 컬러 분석",
-              desc: "ITA 지수 기반의 초정밀 피부톤 측정과 계절별 퍼스널 컬러 고도화 진단",
+              desc: "ITA 지수(피부 밝기 측정 지수) 기반의 초정밀 피부톤 측정과 계절별 퍼스널 컬러 고도화 진단",
               bgColor: "bg-purple-50",
-              iconColor: "text-purple-500"
+              iconColor: "text-purple-500",
+              href: "/signup"
             },
             {
               icon: Zap,
               title: "바디 쉐이핑",
-              desc: "전신 실루엣 분석을 통한 장점 극대화 코디네이션 및 스타일 제안",
+              desc: "전신 실루엣(몸의 전체적인 윤곽) 분석을 통한 장점 극대화 코디네이션 및 스타일 제안",
               bgColor: "bg-amber-50",
-              iconColor: "text-vibe-gold"
+              iconColor: "text-vibe-gold",
+              href: "/signup"
             },
             {
               icon: ShieldCheck,
               title: "프리미엄 큐레이션",
-              desc: "엄선된 럭셔리 브랜드와 쿠팡 파트너스 연계 실시간 최저가 매칭",
+              desc: "엄선된 럭셔리 브랜드와 쿠팡 파트너스(상품 추천 시스템) 연계 실시간 최저가 매칭(맞춤형 추천)",
               bgColor: "bg-slate-50",
-              iconColor: "text-vibe-slate"
+              iconColor: "text-vibe-slate",
+              href: "/signup"
             }
           ].map((feature, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className="p-10 rounded-apple-lg border border-vibe-silver/20 bg-white/50 luxury-glass flex flex-col items-center text-center space-y-6"
-            >
-              <div className={`w-16 h-16 ${feature.bgColor} rounded-apple-md flex items-center justify-center`}>
-                <feature.icon className={`w-8 h-8 ${feature.iconColor}`} />
-              </div>
-              <h3 className="text-xl font-bold text-vibe-charcoal">{feature.title}</h3>
-              <p className="text-vibe-slate/60 text-sm leading-relaxed font-light">
-                {feature.desc}
-              </p>
-            </motion.div>
+            <Link href={feature.href} key={i}>
+              <motion.div
+                whileHover={{ y: -10 }}
+                whileTap={{ scale: 0.98 }}
+                className="p-10 rounded-apple-lg border border-vibe-silver/20 bg-white/50 luxury-glass flex flex-col items-center text-center space-y-6 h-full cursor-pointer"
+              >
+                <div className={`w-16 h-16 ${feature.bgColor} rounded-apple-md flex items-center justify-center`}>
+                  <feature.icon className={`w-8 h-8 ${feature.iconColor}`} />
+                </div>
+                <h3 className="text-xl font-bold text-vibe-charcoal">{feature.title}</h3>
+                <p className="text-vibe-slate/60 text-sm leading-relaxed font-light">
+                  {feature.desc}
+                </p>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </section>
@@ -127,13 +132,13 @@ export default function LandingPage() {
           </div>
           
           <div className="flex gap-8 text-xs font-medium text-vibe-slate/30 tracking-widest uppercase">
-            <button className="hover:text-vibe-primary transition-colors">Terms</button>
-            <button className="hover:text-vibe-primary transition-colors">Privacy</button>
-            <button className="hover:text-vibe-primary transition-colors">Partners</button>
+            <Link href="/terms" className="hover:text-vibe-primary transition-colors">이용약관</Link>
+            <Link href="/privacy" className="hover:text-vibe-primary transition-colors">개인정보처리방침</Link>
+            <Link href="/partners" className="hover:text-vibe-primary transition-colors">파트너사</Link>
           </div>
           
           <p className="text-[10px] text-vibe-slate/20 tracking-wider">
-            © 2024 VibeBeauty AI. EXCLUSIVE PERSONAL STYLIST EXPERIENCE.
+            © 2024 VibeBeauty AI. 당신만을 위한 프리미엄 스타일링 경험.
           </p>
         </div>
       </footer>

@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { Camera, Download, Share2, Calendar } from 'lucide-react'
+import { Camera, Download, Share2, Calendar, Sparkles } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { formatDate } from '@/lib/utils'
 import type { StyleLog } from '@/types'

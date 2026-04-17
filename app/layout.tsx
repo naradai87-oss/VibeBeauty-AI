@@ -27,7 +27,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="ko" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <body className="antialiased font-sans text-vibe-charcoal selection:bg-vibe-primary/20">
         <AmbientBackground />
         {children}

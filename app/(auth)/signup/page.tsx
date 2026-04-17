@@ -55,7 +55,7 @@ export default function SignupPage() {
           <div className="w-24 h-24 luxury-glass rounded-full flex items-center justify-center mx-auto mb-8 shadow-luxury">
             <Mail className="w-10 h-10 text-vibe-primary" />
           </div>
-          <h2 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-6">Verification Sent</h2>
+          <h2 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-6">인증 메일이 발송되었습니다</h2>
           <div className="luxury-glass p-8 rounded-apple-lg border-vibe-silver/10 space-y-4 mb-8">
             <p className="text-vibe-slate/60 text-sm leading-relaxed">
               입력하신 <span className="text-vibe-primary font-bold">{form.email}</span> 주소로 <br />
@@ -69,7 +69,7 @@ export default function SignupPage() {
           </div>
           <button onClick={() => router.push('/login')}
             className="btn-premium w-full py-5 text-sm uppercase tracking-[0.2em] font-black">
-            Go to Login
+            로그인하러 가기
           </button>
         </motion.div>
       </div>
@@ -80,7 +80,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-vibe-cream flex flex-col items-center justify-center p-6 selection:bg-vibe-primary selection:text-white">
       {/* Back Button */}
       <Link href="/" className="absolute top-12 left-8 flex items-center gap-2 text-vibe-slate/40 hover:text-vibe-primary transition-colors text-xs font-bold uppercase tracking-widest">
-        <ArrowLeft size={16} /> Welcome
+        <ArrowLeft size={16} /> 환영합니다
       </Link>
 
       <motion.div
@@ -96,18 +96,18 @@ export default function SignupPage() {
           >
             <Sparkles className="w-10 h-10 text-vibe-primary" />
           </motion.div>
-          <h1 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-3">Join the Atelier</h1>
-          <p className="text-vibe-slate/40 text-sm font-light tracking-wide">Begin your journey to a more refined you</p>
+          <h1 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-3">아틀리에(Atelier - 작업실) 가입하기</h1>
+          <p className="text-vibe-slate/40 text-sm font-light tracking-wide">당신을 더 빛나게 할 여정을 시작하세요</p>
         </div>
 
         {/* Signup Form */}
         <div className="luxury-glass p-10 rounded-apple-lg border-vibe-silver/10 space-y-8">
           <form onSubmit={handleSignup} className="space-y-6">
             {[
-              { key: 'nickname', label: 'Preferred Name', placeholder: 'Velvet Queen', type: 'text' },
-              { key: 'email', label: 'Email Address', placeholder: 'style@vibe.ai', type: 'email' },
-              { key: 'password', label: 'Security Password', placeholder: '8+ Characters', type: 'password' },
-              { key: 'referralCode', label: 'Invitation Code (Optional)', placeholder: 'VIBE-XXXX', type: 'text' },
+              { key: 'nickname', label: '사용할 닉네임', placeholder: '닉네임을 입력하세요', type: 'text' },
+              { key: 'email', label: '이메일 주소', placeholder: 'style@vibe.ai', type: 'email' },
+              { key: 'password', label: '보안 비밀번호', placeholder: '8자 이상', type: 'password' },
+              { key: 'referralCode', label: '초대 코드 (선택 사항)', placeholder: 'VIBE-XXXX', type: 'text' },
             ].map(field => (
               <div key={field.key} className="space-y-2">
                 <label className="text-[10px] font-bold text-vibe-slate/40 uppercase tracking-widest ml-1">{field.label}</label>
@@ -134,22 +134,22 @@ export default function SignupPage() {
               disabled={loading}
               className="btn-premium w-full py-5 text-sm uppercase tracking-[0.2em] font-black disabled:opacity-40"
             >
-              {loading ? 'Processing...' : 'Create Account'}
+              {loading ? '처리 중...' : '계정 생성하기'}
             </button>
           </form>
 
           <div className="text-center pt-4 border-t border-vibe-silver/10">
             <p className="text-vibe-slate/40 text-xs font-medium tracking-wide">
-              Already have an account? {' '}
+              이미 계정이 있으신가요? {' '}
               <Link href="/login" className="text-vibe-primary font-bold hover:underline decoration-2 underline-offset-4">
-                Sign In
+                로그인
               </Link>
             </p>
           </div>
         </div>
 
         <p className="text-center text-vibe-slate/20 text-[10px] uppercase font-bold tracking-[0.3em] mt-12">
-          VibeBeauty • Luxury Personal Styling
+          VibeBeauty • 럭셔리 퍼스널 스타일링
         </p>
       </motion.div>
     </div>

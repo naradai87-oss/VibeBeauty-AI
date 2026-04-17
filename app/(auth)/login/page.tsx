@@ -40,7 +40,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-vibe-cream flex flex-col items-center justify-center p-6 selection:bg-vibe-primary selection:text-white">
       {/* Back Button */}
       <Link href="/" className="absolute top-12 left-8 flex items-center gap-2 text-vibe-slate/40 hover:text-vibe-primary transition-colors text-xs font-bold uppercase tracking-widest">
-        <ArrowLeft size={16} /> Back to Home
+        <ArrowLeft size={16} /> 홈으로 돌아가기
       </Link>
 
       <motion.div
@@ -56,15 +56,15 @@ export default function LoginPage() {
           >
             <Diamond className="w-10 h-10 text-vibe-primary" />
           </motion.div>
-          <h1 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-3">Welcome Back</h1>
-          <p className="text-vibe-slate/40 text-sm font-light tracking-wide">Enter your details to access your personal stylist</p>
+          <h1 className="heading-serif text-4xl text-vibe-charcoal font-medium mb-3">다시 오신 것을 환영합니다</h1>
+          <p className="text-vibe-slate/40 text-sm font-light tracking-wide">로그인 정보를 입력하여 나만의 퍼스널 스타일리스트를 만나보세요</p>
         </div>
 
         {/* Login Form */}
         <div className="luxury-glass p-10 rounded-apple-lg border-vibe-silver/10 space-y-8">
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-vibe-slate/40 uppercase tracking-widest ml-1">Email Address</label>
+              <label className="text-[10px] font-bold text-vibe-slate/40 uppercase tracking-widest ml-1">이메일 주소</label>
               <input
                 type="email"
                 value={email}
@@ -77,8 +77,8 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center ml-1">
-                <label className="text-[10px] font-bold text-vibe-slate/40 uppercase tracking-widest">Password</label>
-                <button type="button" className="text-[10px] font-bold text-vibe-primary/60 hover:text-vibe-primary uppercase tracking-widest">Forgot?</button>
+                <label className="text-[10px] font-bold text-vibe-slate/40 uppercase tracking-widest">비밀번호</label>
+                <button type="button" className="text-[10px] font-bold text-vibe-primary/60 hover:text-vibe-primary uppercase tracking-widest">비밀번호 찾기</button>
               </div>
               <div className="relative">
                 <input
@@ -108,22 +108,22 @@ export default function LoginPage() {
               disabled={loading}
               className="btn-premium w-full py-5 text-sm uppercase tracking-[0.2em] font-black disabled:opacity-40"
             >
-              {loading ? 'Authenticating...' : 'Sign In'}
+              {loading ? '인증 중...' : '로그인'}
             </button>
           </form>
 
           <div className="text-center pt-4 border-t border-vibe-silver/10">
             <p className="text-vibe-slate/40 text-xs font-medium tracking-wide">
-              Don&apos;t have an account yet? {' '}
+              아직 계정이 없으신가요? {' '}
               <Link href="/signup" className="text-vibe-primary font-bold hover:underline decoration-2 underline-offset-4">
-                Create Account
+                계정 생성하기
               </Link>
             </p>
           </div>
         </div>
 
         <p className="text-center text-vibe-slate/20 text-[10px] uppercase font-bold tracking-[0.3em] mt-12">
-          VibeBeauty • Luxury Personal Styling
+          VibeBeauty • 럭셔리 퍼스널 스타일링
         </p>
       </motion.div>
     </div>
