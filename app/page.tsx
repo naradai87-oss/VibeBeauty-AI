@@ -7,8 +7,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white pt-20">
       {/* --- HERO SECTION --- */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Hero Image Background */}
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden border-4 border-red-500">
+        {/* Hero Image Background (HIDDEN FOR TESTING)
         <div className="absolute inset-0 z-0">
           <Image 
             src="/hero-beauty.png" 
@@ -20,9 +20,10 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-vibe-cream/40 via-transparent to-vibe-cream z-[1]" />
           <div className="absolute inset-0 bg-white/5 z-[2]" />
         </div>
+        */}
 
         {/* Hero Content Overlay */}
-        <div className="relative z-10 w-full flex justify-center">
+        <div className="relative z-50 w-full flex justify-center bg-black/10">
           <LandingHero />
         </div>
       </section>
