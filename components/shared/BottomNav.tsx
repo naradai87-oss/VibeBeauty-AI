@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { Home, BookOpen, ShoppingBag, User } from 'lucide-react'
 import { motion } from 'motion/react'
+import { createClient } from '@/lib/supabase'
 
 const NAV_ITEMS = [
   { icon: Home,       label: '홈',       path: '/dashboard' },
@@ -14,6 +16,25 @@ const NAV_ITEMS = [
 export default function BottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const supabase = createClient()
+  const [session, setSession] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+      setLoading(false)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase])
+
+  // 인증 로딩 중이거나 세션이 없으면 메뉴를 렌더링하지 않음 (플리커링 방지)
+  if (loading || !session) return null
 
   return (
     <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg z-50 px-6 pb-8">
