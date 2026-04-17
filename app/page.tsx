@@ -5,9 +5,9 @@ import LandingHero from '@/components/landing/LandingHero'
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white">
+    <div className="min-h-screen bg-vibe-cream selection:bg-vibe-primary selection:text-white relative">
       {/* --- HEADER NAVIGATION --- */}
-      <header className="fixed top-0 left-0 right-0 z-[100] px-8 py-6 flex items-center justify-between backdrop-blur-sm bg-vibe-cream/10">
+      <header className="fixed top-0 left-0 right-0 z-[999] px-8 py-6 flex items-center justify-between bg-vibe-cream/80 backdrop-blur-md border-b border-vibe-silver/10">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 luxury-glass rounded-apple-md flex items-center justify-center">
             <Sparkles size={16} className="text-vibe-primary" />
@@ -28,9 +28,9 @@ export default function LandingPage() {
       </header>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden z-10">
         {/* Hero Image Background */}
-        <div className="absolute inset-0 z-0 scale-105">
+        <div className="absolute inset-0 z-0 scale-100">
           <Image 
             src="/hero-beauty.png" 
             alt="Premium Beauty"
@@ -38,16 +38,18 @@ export default function LandingPage() {
             className="object-cover opacity-90 brightness-[1.05]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-vibe-cream/60 via-vibe-cream/20 to-vibe-cream z-[1]" />
-          <div className="absolute inset-0 bg-white/10 z-[2] backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-vibe-cream/40 via-transparent to-vibe-cream z-[1]" />
+          <div className="absolute inset-0 bg-white/5 z-[2]" />
         </div>
 
-        {/* Hero Content Overlay (Animated Client Component) */}
-        <LandingHero />
+        {/* Hero Content Overlay */}
+        <div className="relative z-50">
+          <LandingHero />
+        </div>
       </section>
 
       {/* --- FEATURES SECTION --- */}
-      <section className="px-6 py-32 max-w-6xl mx-auto relative z-[60]">
+      <section className="px-6 py-32 max-w-6xl mx-auto relative z-[90]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
             {
@@ -76,7 +78,7 @@ export default function LandingPage() {
             }
           ].map((feature, i) => (
             <Link href={feature.href} key={i} prefetch={false} className="group">
-              <div className="p-12 rounded-apple-xl border border-vibe-silver/30 bg-white shadow-luxury-lg flex flex-col items-center text-center space-y-8 h-full cursor-pointer transition-transform duration-500 hover:-translate-y-2">
+              <div className="p-12 rounded-apple-xl border border-vibe-silver/30 bg-white shadow-luxury-lg flex flex-col items-center text-center space-y-8 h-full cursor-pointer transition-all duration-300 hover:-translate-y-2">
                 <div className={`w-20 h-20 ${feature.bgColor} rounded-apple-lg flex items-center justify-center shadow-inner`}>
                   <feature.icon className={`w-10 h-10 ${feature.iconColor}`} />
                 </div>
@@ -93,7 +95,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-[60]">
+      <footer className="py-24 border-t border-vibe-silver/20 text-center bg-white relative z-[90]">
         <div className="flex flex-col items-center space-y-10">
           <div className="flex items-center gap-3 opacity-40">
             <Sparkles className="w-6 h-6 text-vibe-primary" />
