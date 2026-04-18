@@ -11,10 +11,10 @@ export default function LandingPage() {
         {/* Hero Image Background */}
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/hero-beauty.png" 
-            alt="Premium Beauty"
+            src="/hero-kbeauty.png" 
+            alt="Premium K-Beauty Atelier"
             fill
-            className="object-cover opacity-90 brightness-[1.05]"
+            className="object-cover opacity-90 brightness-[1.02]"
             priority
           />
           {/* Refined Overlays */}

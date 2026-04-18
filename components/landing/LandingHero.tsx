@@ -5,29 +5,29 @@ export default function LandingHero() {
   return (
     <div className="relative z-[50] max-w-4xl px-6 text-center">
       <div
-        className="animate-fade-in-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full luxury-glass border-vibe-silver/40 mb-10 shadow-luxury"
+        className="animate-fade-in-up inline-flex items-center gap-2 px-5 py-2 rounded-full luxury-glass border-vibe-gold/20 mb-10 shadow-luxury"
         style={{ animationDelay: '0.1s' }}
       >
         <Star className="w-3.5 h-3.5 text-vibe-gold fill-vibe-gold" />
-        <span className="text-[10px] font-black tracking-[0.25em] text-vibe-charcoal uppercase">
-          The Evolution of Personal Style
+        <span className="text-[10px] font-black tracking-[0.3em] text-vibe-navy uppercase">
+          L'Atelier de Vibe
         </span>
       </div>
 
       <h1 
-        className="animate-fade-in-up heading-serif text-6xl md:text-9xl font-light text-vibe-charcoal leading-[1.1] mb-12 tracking-tighter"
+        className="animate-fade-in-up heading-serif text-7xl md:text-[10rem] font-light text-vibe-navy leading-[0.95] mb-12 tracking-tighter"
         style={{ animationDelay: '0.3s' }}
       >
-        당신만의 <br />
-        <span className="italic gradient-text font-medium">분위기</span>를 찾으세요
+        Your <span className="italic font-normal">Personal</span> <br />
+        <span className="gradient-text font-medium italic">Vibe</span>
       </h1>
 
       <p
-        className="animate-fade-in-up text-lg md:text-xl text-vibe-slate/80 max-w-xl mx-auto leading-relaxed mb-16 font-medium"
+        className="animate-fade-in-up text-lg md:text-xl text-vibe-navy/60 max-w-xl mx-auto leading-relaxed mb-16 font-medium"
         style={{ animationDelay: '0.5s' }}
       >
-        데이터와 감각의 완벽한 조화. <br className="hidden md:block" />
-        업계 최고 수준의 AI 스타일링 솔루션을 경험하세요.
+        The perfect fusion of data and intuition. <br className="hidden md:block" />
+        Experience the world's most sophisticated AI styling atelier.
       </p>
 
       <div 

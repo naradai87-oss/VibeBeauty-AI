@@ -11,9 +11,9 @@
   html, body {
     max-width: 100vw;
     overflow-x: hidden;
-    background: #FDFCFB;
-    color: #1E293B;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #F5F5DC; /* Stitch Cream */
+    color: #001F3F; /* Stitch Navy */
+    font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
   }
@@ -47,9 +47,10 @@
 
   /* Sophisticated Typography */
   .heading-serif {
-    font-family: var(--font-playfair), serif;
+    font-family: 'Noto Serif', serif;
     letter-spacing: -0.01em;
     font-weight: 500;
+    color: #001F3F;
   }
 
   .gradient-text {

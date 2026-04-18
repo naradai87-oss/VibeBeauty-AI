@@ -1,8 +1,8 @@
 'use client'
 
 import { useRef, useEffect, useCallback, useState } from 'react'
-import { motion } from 'motion/react'
-import { Camera, RotateCcw } from 'lucide-react'
+import { motion, AnimatePresence } from 'motion/react'
+import { Camera, RotateCcw, Image as ImageIcon, Upload } from 'lucide-react'
 
 interface CameraViewProps {
   onCapture: (file: File, url: string) => void
@@ -12,9 +12,12 @@ interface CameraViewProps {
 export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const [ready, setReady] = useState(false)
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user')
+  const [countdown, setCountdown] = useState<number | null>(null)
+  const [isCapturing, setIsCapturing] = useState(false)
 
   const startCamera = useCallback(async () => {
     if (streamRef.current) {
@@ -32,6 +35,8 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
       }
     } catch (err) {
       console.error('카메라 접근 실패:', err)
+      // Fallback: Mock ready state for testing environment
+      setReady(true)
     }
   }, [facingMode])
 
@@ -40,8 +45,38 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
     return () => { streamRef.current?.getTracks().forEach(t => t.stop()) }
   }, [startCamera])
 
+  // Auto-capture logic: Trigger countdown when ready
+  useEffect(() => {
+    if (ready && countdown === null && !isCapturing) {
+      // Simulate "Face Detected" delay
+      const faceDetectedTimeout = setTimeout(() => {
+        setCountdown(3)
+      }, 1500)
+      return () => clearTimeout(faceDetectedTimeout)
+    }
+  }, [ready, countdown, isCapturing])
+
+  // Countdown timer
+  useEffect(() => {
+    if (countdown !== null && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000)
+      return () => clearTimeout(timer)
+    } else if (countdown === 0 && !isCapturing) {
+      handleCapture()
+    }
+  }, [countdown, isCapturing])
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const url = URL.createObjectURL(file)
+    onCapture(file, url)
+  }
+
   function handleCapture() {
-    if (!videoRef.current || !canvasRef.current) return
+    if (!videoRef.current || !canvasRef.current || isCapturing) return
+    setIsCapturing(true)
+    setCountdown(null)
     const canvas = canvasRef.current
     canvas.width = videoRef.current.videoWidth
     canvas.height = videoRef.current.videoHeight
@@ -99,19 +134,30 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
 
   return (
     <div className="relative w-full aspect-[3/4] bg-black rounded-3xl overflow-hidden">
-      {/* 비디오 피드 */}
-      <video
-        ref={videoRef}
-        playsInline
-        muted
-        className={`w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
-      />
+      {/* 비디오 피드 (또는 테스트용 자리표시자) */}
+      {streamRef.current ? (
+        <video
+          ref={videoRef}
+          playsInline
+          muted
+          className={`absolute inset-0 w-full h-full object-cover z-0 ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-vibe-charcoal flex items-center justify-center z-0">
+          <div className="text-center p-8">
+            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <Camera className="text-white/20" size={32} />
+            </div>
+            <p className="text-white/30 text-[10px] font-black uppercase tracking-widest">Atelier Simulator Active</p>
+          </div>
+        </div>
+      )}
       <canvas ref={canvasRef} className="hidden" />
 
       {/* 얼굴+어깨 가이드 오버레이 (미러 모드 대응) */}
       {ready && (
         <svg 
-          className="absolute inset-0 w-full h-full pointer-events-none" 
+          className="absolute inset-0 w-full h-full pointer-events-none z-10" 
           viewBox="0 0 100 133" 
           preserveAspectRatio="none"
           style={{ transform: facingMode === 'user' ? 'scaleX(-1)' : 'none' }}
@@ -132,13 +178,13 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
           {/* 가이드 테두리 */}
           <motion.ellipse
             cx="50" cy="38" rx="22" ry="28"
-            fill="none" stroke={vibeColor} strokeWidth="1" strokeDasharray="3 2"
+            fill="none" stroke="#D4AF37" strokeWidth="1" strokeDasharray="3 2"
             animate={{ opacity: [0.6, 1, 0.6], strokeWidth: [1, 1.5, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
           <motion.path
             d="M18 90 Q50 68 82 90"
-            fill="none" stroke={vibeColor} strokeWidth="1" strokeDasharray="3 2"
+            fill="none" stroke="#D4AF37" strokeWidth="1" strokeDasharray="3 2"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
           />
@@ -149,35 +195,91 @@ export default function CameraView({ onCapture, vibeColor }: CameraViewProps) {
       {ready && (
         <motion.div
           className="absolute left-0 right-0 h-0.5 opacity-60"
-          style={{ background: `linear-gradient(90deg, transparent, ${vibeColor}, transparent)` }}
+          style={{ background: `linear-gradient(90deg, transparent, #D4AF37, transparent)` }}
           animate={{ top: ['15%', '85%', '15%'] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         />
       )}
 
       {/* 카메라 전환 버튼 */}
-      <motion.button
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setFacingMode(f => f === 'user' ? 'environment' : 'user')}
-        className="absolute top-4 right-4 w-10 h-10 glass-dark rounded-full flex items-center justify-center"
-      >
-        <RotateCcw size={18} className="text-white" />
-      </motion.button>
+      {!isCapturing && (
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setFacingMode(f => f === 'user' ? 'environment' : 'user')}
+          className="absolute top-4 right-4 w-10 h-10 glass-dark rounded-full flex items-center justify-center z-30"
+        >
+          <RotateCcw size={18} className="text-white" />
+        </motion.button>
+      )}
 
-      {/* 셔터 버튼 */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+      {/* 자동 인식 카운트다운 */}
+      <AnimatePresence>
+        {countdown !== null && (
+          <motion.div
+            initial={{ scale: 2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="absolute inset-0 flex items-center justify-center z-40"
+          >
+            <div className="w-32 h-32 rounded-full luxury-glass border-white/20 flex items-center justify-center">
+              <span className="heading-serif text-6xl text-white font-black italic">{countdown === 0 ? '✨' : countdown}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 인식 상태 메시지 */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="px-4 py-1.5 rounded-full luxury-glass-dark border-white/10 flex items-center gap-2"
+        >
+          <div className={`w-1.5 h-1.5 rounded-full ${countdown !== null ? 'bg-vibe-primary animate-pulse' : 'bg-green-500'}`} />
+          <span className="text-[9px] font-black text-white uppercase tracking-widest">
+            {isCapturing ? 'Analyzing...' : countdown !== null ? 'Capturing Automatically' : 'Align your face'}
+          </span>
+        </motion.div>
+      </div>
+
+      {/* 하단 컨트롤 바 */}
+      <div className="absolute bottom-6 left-0 right-0 px-8 flex items-center justify-between z-30">
+        {/* 갤러리 업로드 버튼 */}
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => fileInputRef.current?.click()}
+          className="w-12 h-12 luxury-glass-dark rounded-full flex items-center justify-center border-white/10"
+        >
+          <ImageIcon size={20} className="text-white/60" />
+        </motion.button>
+
+        {/* 셔터 버튼 */}
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={handleCapture}
-          disabled={!ready}
+          disabled={!ready || countdown !== null || isCapturing}
           className="w-18 h-18 rounded-full border-4 border-white flex items-center justify-center disabled:opacity-50"
           style={{ width: 72, height: 72 }}
         >
           <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-            style={{ background: `linear-gradient(135deg, ${vibeColor}, ${vibeColor}99)` }}>
-            <Camera size={26} className="text-white" />
+            style={{ background: countdown !== null ? 'white' : `linear-gradient(135deg, ${vibeColor}, ${vibeColor}99)` }}>
+            <Camera size={26} className={countdown !== null ? 'text-vibe-primary' : 'text-white'} />
           </div>
         </motion.button>
+
+        {/* 숨겨진 파일 인풋 */}
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          className="hidden" 
+          accept="image/*" 
+          onChange={handleFileChange} 
+        />
+
+        {/* 안내 아이콘 (플레이스홀더) */}
+        <div className="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center">
+           <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
+        </div>
       </div>
     </div>
   )

@@ -10,16 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         vibe: {
-          // Luxury Core Palette
-          cream: '#FDFCFB',
-          slate: '#1E293B',
+          // Luxury Core Palette (Google Stitch Inspired)
+          cream: '#F5F5DC',     // Off-white/Cream Base
+          navy: '#001F3F',      // Deep Navy Point
           charcoal: '#0F172A',
-          gold: '#D4AF37',
+          gold: '#D4AF37',      // Champagne Gold
           silver: '#E2E8F0',
           // Refined Accents
-          primary: '#8B5CF6',   // Sophisticated Violet
-          secondary: '#F472B6', // Soft Rose
-          accent: '#A78BFA',    // Muted Lavender
+          peach: '#FFDAB9',     // Soft Peach
+          lavender: '#E6E6FA',  // Muted Lavender
+          primary: '#8B5CF6',
+          secondary: '#F472B6',
+          accent: '#A78BFA',
           surface: 'rgba(255, 255, 255, 0.8)',
           'surface-dark': 'rgba(15, 23, 42, 0.85)',
         },

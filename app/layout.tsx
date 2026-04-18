@@ -1,18 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Manrope, Noto_Serif } from 'next/font/google'
 import AmbientBackground from '@/components/shared/AmbientBackground'
 import './globals.css'
 import { Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
-const inter = Inter({ 
+const manrope = Manrope({ 
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-manrope',
 })
 
-const playfair = Playfair_Display({
+const notoSerif = Noto_Serif({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-noto-serif',
 })
 
 export const metadata: Metadata = {
@@ -29,32 +29,32 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="antialiased font-sans text-vibe-charcoal selection:bg-vibe-primary/20">
+    <html lang="ko" className={`${manrope.variable} ${notoSerif.variable}`} suppressHydrationWarning>
+      <body className="antialiased font-sans text-vibe-navy selection:bg-vibe-gold/20">
         <AmbientBackground />
         
         <main>
           {children}
         </main>
 
-        {/* --- GLOBAL HEADER (Placed last for stacking) --- */}
-        <header className="fixed top-0 left-0 right-0 z-[9999] px-8 py-6 flex items-center justify-between bg-vibe-cream/90 backdrop-blur-xl border-b border-vibe-silver/20 shadow-sm">
+        {/* --- GLOBAL HEADER (Stitch Theme) --- */}
+        <header className="fixed top-0 left-0 right-0 z-[9999] px-8 py-6 flex items-center justify-between bg-vibe-cream/80 backdrop-blur-xl border-b border-vibe-navy/5 shadow-sm">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 luxury-glass rounded-apple-md flex items-center justify-center transition-transform group-hover:scale-110">
-                <Sparkles size={16} className="text-vibe-primary" />
+                <Sparkles size={16} className="text-vibe-gold" />
               </div>
-              <span className="heading-serif italic text-lg text-vibe-charcoal tracking-wider">VibeBeauty</span>
+              <span className="heading-serif italic text-xl text-vibe-navy tracking-tight">VibeBeauty</span>
             </Link>
           </div>
           
-          <div className="flex items-center gap-6">
-            <Link href="/login" prefetch={false} className="text-xs font-bold text-vibe-slate/60 hover:text-vibe-primary uppercase tracking-widest transition-colors">
-              로그인
+          <div className="flex items-center gap-8">
+            <Link href="/login" prefetch={false} className="text-[10px] font-black text-vibe-navy/40 hover:text-vibe-navy uppercase tracking-[0.3em] transition-colors italic">
+              Access
             </Link>
             <Link href="/signup" prefetch={false}>
-              <button className="px-5 py-2.5 bg-vibe-charcoal text-white rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-vibe-primary transition-all shadow-luxury">
-                시작하기
+              <button className="px-6 py-3 bg-vibe-navy text-white rounded-apple-md text-[10px] font-black uppercase tracking-[0.3em] hover:bg-vibe-charcoal transition-all shadow-luxury">
+                L'Atelier
               </button>
             </Link>
           </div>

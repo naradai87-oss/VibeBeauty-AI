@@ -3,32 +3,31 @@
 import { motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { Diamond, Sparkles, Camera, ChevronRight, Star } from 'lucide-react'
+import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import type { Profile } from '@/types'
 
 const VIBE_CARDS = [
-  {
-    id: 'mz_ghibli',
-    label: 'MZ 지브리',
-    emoji: '🌿',
-    desc: '청순 & 내추럴',
-    gradient: 'from-[#E0F2F1] to-[#B2DFDB]',
-    span: 'col-span-2 row-span-2'
+  { 
+    id: 'mz_ghibli', 
+    title: 'MZ Ghibli', 
+    desc: 'Soft, nostalgic, and artistically curated tones.', 
+    color: 'bg-[#8B5CF6]', 
+    emoji: '🌿' 
   },
-  {
-    id: 'business',
-    label: '비즈니스',
-    emoji: '💼',
-    desc: '샤프 & 시크',
-    gradient: 'from-[#F1F5F9] to-[#E2E8F0]',
-    span: 'col-span-1 row-span-1'
+  { 
+    id: 'business', 
+    title: 'The Executive', 
+    desc: 'Sharp, authoritative, and perfectly structured.', 
+    color: 'bg-[#001F3F]', 
+    emoji: '💼' 
   },
-  {
-    id: 'trendy',
-    label: '트렌디',
-    emoji: '🔥',
-    desc: '힙 & 볼드',
-    gradient: 'from-[#FFF1F2] to-[#FFE4E6]',
-    span: 'col-span-1 row-span-1'
+  { 
+    id: 'trendy', 
+    title: 'Avant-Garde', 
+    desc: 'Bold, expressive, and ahead of the curve.', 
+    color: 'bg-[#F472B6]', 
+    emoji: '🔥' 
   },
 ]
 
@@ -39,6 +38,19 @@ interface Props {
 export default function DashboardClient({ profile }: Props) {
   const router = useRouter()
 
+  const searchParams = useSearchParams()
+  const isDemo = searchParams.get('demo') === 'true'
+
+  useEffect(() => {
+    if (isDemo) {
+      console.log('🚀 Demo Mode Active: Navigating in 3 seconds...')
+      const timer = setTimeout(() => {
+        router.push('/capture?vibe=mz_ghibli')
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [isDemo, router])
+
   function handleVibeSelect(vibeId: string) {
     router.push(`/capture?vibe=${vibeId}`)
   }
@@ -48,19 +60,19 @@ export default function DashboardClient({ profile }: Props) {
       {/* --- TOP NAVIGATION / HEADER --- */}
       <header className="px-6 pt-12 pb-6 flex items-center justify-between sticky top-0 z-20 bg-vibe-cream/80 backdrop-blur-md">
         <div>
-          <p className="text-vibe-slate/40 text-[10px] font-bold tracking-widest uppercase mb-1">프리미엄 액세스</p>
-          <h1 className="heading-serif text-3xl text-vibe-charcoal font-medium">
-            벨벳(Velvet) {profile?.nickname?.split(' ')[0] ?? 'Queen'}
+          <p className="text-vibe-navy/40 text-[10px] font-black tracking-[0.3em] uppercase mb-1">Elite Member</p>
+          <h1 className="heading-serif text-3xl text-vibe-navy">
+            L'Atelier de <span className="italic font-normal">{profile?.nickname?.split(' ')[0] ?? 'Queen'}</span>
           </h1>
         </div>
 
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push('/shop')}
-          className="luxury-glass px-4 py-2.5 rounded-apple-md flex items-center gap-2 border-vibe-silver/30 shadow-luxury"
+          className="luxury-glass px-5 py-2.5 rounded-full flex items-center gap-2.5 border-vibe-gold/20 shadow-luxury"
         >
-          <Diamond size={16} className="text-vibe-primary" />
-          <span className="font-bold text-vibe-charcoal text-sm">
+          <Diamond size={14} className="text-vibe-gold fill-vibe-gold" />
+          <span className="font-black text-vibe-navy text-xs tracking-widest">
             {profile?.diamond_balance ?? 0}
           </span>
         </motion.button>
@@ -68,115 +80,153 @@ export default function DashboardClient({ profile }: Props) {
 
       <main className="px-6 space-y-12 animate-fade-in-up pb-12">
         {/* --- PREMIUM HERO BANNER --- */}
-        <section>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative h-64 rounded-[32px] overflow-hidden shadow-luxury-lg group cursor-pointer"
-            onClick={() => router.push('/capture')}
-          >
-            {/* Background Image (Generated Premium Asset) */}
-            <div className="absolute inset-0">
-              <img 
-                src="/premium_beauty_dashboard_banner_1776444451087.png" 
-                alt="Premium Aesthetic" 
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-vibe-charcoal/80 via-vibe-charcoal/40 to-transparent" />
-            </div>
-
-            <div className="relative z-10 h-full p-8 flex flex-col justify-center items-start space-y-4">
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-                <Sparkles size={12} className="text-vibe-gold" />
-                <span className="text-[9px] font-bold tracking-[0.2em] text-white uppercase">Elite AI Experience</span>
-              </div>
-              
-              <div className="space-y-1">
-                <h2 className="heading-serif text-white text-3xl leading-tight">
-                  나만의 <span className="italic">시그니처</span> <br />
-                  무드를 발견하세요
-                </h2>
-                <p className="text-white/60 text-[10px] font-medium tracking-wide">
-                  AI 기반 초정밀 퍼스널 컬러 & 체형 분석 서비스
-                </p>
-              </div>
-
-              <motion.div
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-2 text-vibe-primary font-bold text-xs tracking-[0.2em] uppercase pt-2"
+      <section className="relative h-[480px] rounded-[48px] overflow-hidden shadow-luxury-2xl group cursor-pointer"
+          onClick={() => router.push('/capture')}>
+          <img 
+            src="/hero-kbeauty.png" 
+            alt="Luxury Atelier"
+            className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-vibe-navy/90 via-vibe-navy/30 to-transparent" />
+          
+          <div className="absolute inset-0 p-12 flex flex-col justify-end items-start">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 mb-8">
+              <Sparkles size={12} className="text-vibe-gold fill-vibe-gold" />
+              <span className="text-[10px] font-black tracking-[0.4em] text-white uppercase">Vibe Genisys</span>
+            </motion.div>
+            
+            <h2 className="heading-serif text-5xl md:text-7xl text-white mb-6 leading-[1.1]">
+              Elevate Your <br />
+              <span className="italic">Perspective</span>
+            </h2>
+            
+            <div className="flex gap-4">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-10 py-5 bg-white text-vibe-navy rounded-apple-md font-black text-[10px] tracking-[0.3em] uppercase shadow-luxury"
               >
-                Analysis Start <ChevronRight size={14} />
-              </motion.div>
+                Start Analysis
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={(e) => { e.stopPropagation(); router.push('/ar-mirror'); }}
+                className="px-10 py-5 luxury-glass-dark text-white rounded-apple-md font-black text-[10px] tracking-[0.3em] uppercase border-white/10"
+              >
+                AR Mirror
+              </motion.button>
             </div>
-          </motion.div>
+          </div>
         </section>
 
-        {/* --- MOOD SELECTION (BENTO GRID) --- */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-vibe-charcoal font-bold text-lg tracking-tight">오늘의 무드 선택</h3>
-            <span className="text-vibe-slate/30 text-xs font-medium">무드 새로고침</span>
+        {/* --- STYLE ATELIER SELECTOR --- */}
+        <section className="space-y-8">
+          <div className="flex items-center justify-between px-2">
+            <h3 className="heading-serif text-3xl text-vibe-navy">Studio Selection</h3>
+            <span className="text-vibe-navy/20 text-[10px] font-black uppercase tracking-[0.3em]">3 Active Vibes</span>
           </div>
-
-          <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[440px]">
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {VIBE_CARDS.map((card, i) => (
               <motion.button
                 key={card.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -8 }}
                 onClick={() => handleVibeSelect(card.id)}
-                className={`relative overflow-hidden rounded-[24px] p-7 flex flex-col justify-between text-left group transition-all duration-500 shadow-luxury hover:shadow-luxury-lg ${card.gradient} ${card.span}`}
+                className="group relative p-8 rounded-[40px] luxury-glass border-vibe-navy/5 hover:border-vibe-gold/40 text-left transition-all duration-500 bg-white/40 shadow-luxury"
               >
-                {/* 배경 이미지 (MZ 지브리 전용) */}
-                {card.id === 'mz_ghibli' && (
-                  <div className="absolute inset-0 z-0">
-                    <img 
-                      src="/mz_ghibli_style_bg_1776444472020.png" 
-                      alt="Ghibli Vibe" 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  </div>
-                )}
-
-                {/* Subtle Grain Overlay */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-                
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className={`w-12 h-12 luxury-glass rounded-2xl flex items-center justify-center text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ${card.id === 'mz_ghibli' ? 'bg-white/20 border-white/30' : ''}`}>
-                    {card.emoji}
-                  </div>
-                  <div className={`luxury-glass px-3 py-1.5 rounded-full text-[9px] font-black flex items-center gap-1.5 ${card.id === 'mz_ghibli' ? 'bg-white/20 text-white border-white/30' : 'text-vibe-slate/60'}`}>
-                    <Diamond size={10} className={card.id === 'mz_ghibli' ? 'text-vibe-gold' : 'text-vibe-primary'} /> 5
-                  </div>
+                <div className={`w-16 h-16 ${card.color} rounded-[24px] flex items-center justify-center text-3xl shadow-luxury group-hover:scale-110 transition-transform mb-8`}>
+                  {card.emoji}
                 </div>
-
-                <div className="relative z-10">
-                  <p className={`text-[9px] font-black tracking-[0.2em] uppercase mb-1 ${card.id === 'mz_ghibli' ? 'text-white/60' : 'text-vibe-charcoal/40'}`}>
-                    {card.desc}
-                  </p>
-                  <h4 className={`font-bold text-2xl tracking-tight ${card.id === 'mz_ghibli' ? 'text-white' : 'text-vibe-charcoal'}`}>
-                    {card.label}
-                  </h4>
+                <div>
+                  <h4 className="heading-serif text-2xl text-vibe-navy mb-2">{card.title}</h4>
+                  <p className="text-vibe-navy/40 text-[12px] leading-relaxed italic">{card.desc}</p>
+                </div>
+                <div className="mt-8 flex items-center justify-between">
+                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-vibe-navy/5 text-[10px] font-black text-vibe-navy/40 uppercase tracking-widest">
+                     Premium
+                   </div>
+                   <ChevronRight size={20} className="text-vibe-navy/20 group-hover:text-vibe-gold transition-colors" />
                 </div>
               </motion.button>
             ))}
           </div>
         </section>
 
-        {/* --- CURATED TIPS --- */}
+        {/* --- WEEKLY STYLE INSIGHT --- */}
         <section>
-          <div className="luxury-glass p-6 rounded-apple-lg border-vibe-gold/10 flex items-center gap-5 bg-gradient-to-r from-vibe-cream to-white">
-            <div className="w-14 h-14 bg-vibe-gold/10 rounded-apple-md flex items-center justify-center">
-              <Star className="text-vibe-gold" />
+          <div className="flex items-center justify-between mb-8 px-2">
+            <h3 className="heading-serif text-3xl text-vibe-navy">Style Insight</h3>
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-vibe-gold/10 border border-vibe-gold/20">
+              <div className="w-1.5 h-1.5 rounded-full bg-vibe-gold animate-pulse" />
+              <span className="text-vibe-gold text-[10px] font-black uppercase tracking-widest italic">Live Atelier</span>
             </div>
-            <div>
-              <h5 className="text-vibe-charcoal font-bold text-sm mb-0.5 tracking-tight">전문가 스타일링 팁</h5>
-              <p className="text-vibe-slate/50 text-[11px] leading-relaxed">
-                어두운 배경보다 밝은 실내에서 촬영 시 <br />
-                인공지능의 피부톤 분석 오차가 12% 감소합니다.
+          </div>
+
+          <div className="luxury-glass p-12 rounded-[56px] border-vibe-navy/5 shadow-luxury-lg bg-white/60">
+            <div className="flex items-end justify-between h-56 gap-6 mb-12">
+              {[
+                { label: 'Mon', h: '40%', active: false },
+                { label: 'Tue', h: '60%', active: false },
+                { label: 'Wed', h: '85%', active: true },
+                { label: 'Thu', h: '55%', active: false },
+                { label: 'Fri', h: '95%', active: false },
+                { label: 'Sat', h: '30%', active: false },
+                { label: 'Sun', h: '45%', active: false },
+              ].map((day, i) => (
+                <div key={i} className="flex-1 flex flex-col items-center gap-6">
+                  <div className="w-full relative group">
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: day.h }}
+                      transition={{ delay: 0.5 + i * 0.1, duration: 1 }}
+                      className={`w-full rounded-full transition-all duration-700 ${day.active ? 'bg-vibe-navy' : 'bg-vibe-navy/5 group-hover:bg-vibe-navy/20'}`}
+                    />
+                    {day.active && (
+                      <div className="absolute -top-14 left-1/2 -translate-x-1/2 luxury-glass-dark px-4 py-2 rounded-full text-[10px] text-white font-black tracking-widest whitespace-nowrap shadow-luxury">
+                        OPTIMAL
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-[11px] font-black text-vibe-navy/20 uppercase tracking-[0.2em]">{day.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-12 pt-10 border-t border-vibe-navy/5">
+              <div className="flex-1">
+                <p className="text-[10px] font-black text-vibe-navy/30 uppercase tracking-[0.4em] mb-3">Vibe Consistency</p>
+                <div className="flex items-center gap-4">
+                  <span className="text-4xl font-light text-vibe-navy tracking-tighter">84.2%</span>
+                  <div className="flex items-center gap-1 text-vibe-gold text-[11px] font-black italic">
+                    <ChevronRight size={14} className="-rotate-90" /> +12.4%
+                  </div>
+                </div>
+              </div>
+              <div className="w-px h-16 bg-vibe-navy/5" />
+              <div className="flex-1">
+                <p className="text-[10px] font-black text-vibe-navy/30 uppercase tracking-[0.4em] mb-3">Seasonal Palette</p>
+                <p className="heading-serif text-3xl text-vibe-navy tracking-tight italic">Summer Cool</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- ELITE PERSPECTIVE --- */}
+        <section>
+          <div className="luxury-glass p-10 rounded-[48px] border-vibe-gold/10 flex items-center gap-8 bg-gradient-to-br from-white to-vibe-cream/40 shadow-luxury">
+            <div className="w-20 h-20 bg-vibe-gold/5 rounded-[24px] flex items-center justify-center shadow-inner border border-vibe-gold/10">
+              <Star className="text-vibe-gold" size={32} />
+            </div>
+            <div className="flex-1">
+              <h5 className="heading-serif text-2xl text-vibe-navy mb-2 italic">Elite Perspective</h5>
+              <p className="text-vibe-navy/50 text-sm leading-relaxed font-medium">
+                Analysis precision increases by <span className="text-vibe-gold font-black">12.4%</span> when 
+                using natural daylight. Position yourself exactly <span className="underline decoration-vibe-gold/30 underline-offset-4">1 meter</span> from a north-facing window.
               </p>
             </div>
           </div>

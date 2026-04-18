@@ -79,12 +79,18 @@ export async function analyzeStyle(
   console.log('Starting style analysis for user:', userId, 'vibe:', vibeType)
 
   // 1) 이미지 Supabase Storage 업로드
-  const fileName = `${userId}/${Date.now()}-before.jpg`
+  const timestamp = Date.now()
+  const sanitizedUserId = userId.replace(/[^a-zA-Z0-9-]/g, '')
+  const fileName = `${sanitizedUserId}/${timestamp}-before.jpg`
+  
+  console.log('Attempting storage upload:', fileName)
+  
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from('style-images')
     .upload(fileName, imageFile, { 
       contentType: 'image/jpeg', 
-      upsert: true // 동일 파일명 충돌 방지 및 재시도 허용
+      cacheControl: '3600',
+      upsert: true 
     })
 
   if (uploadError) {

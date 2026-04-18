@@ -53,23 +53,23 @@ function CaptureContent() {
   }
 
   return (
-    <div className="min-h-screen bg-vibe-charcoal flex flex-col font-sans">
+    <div className="min-h-screen bg-vibe-cream flex flex-col font-sans">
       {/* Header */}
-      <header className="flex items-center gap-5 px-6 pt-14 pb-6">
+      <header className="flex items-center gap-5 px-6 pt-14 pb-6 sticky top-0 z-50 bg-vibe-cream/80 backdrop-blur-md">
         <motion.button 
           whileTap={{ scale: 0.9 }} 
           onClick={() => router.back()}
-          className="w-12 h-12 rounded-full luxury-glass-dark flex items-center justify-center border-white/10"
+          className="w-12 h-12 rounded-full luxury-glass flex items-center justify-center border-vibe-navy/5"
         >
-          <ArrowLeft size={20} className="text-white" />
+          <ArrowLeft size={20} className="text-vibe-navy" />
         </motion.button>
         <div>
-          <h1 className="heading-serif text-white font-medium text-xl flex items-center gap-2">
-            {config.emoji} {config.label} <span className="text-white/40 font-sans text-xs tracking-widest uppercase ml-1">Analysis Mode</span>
+          <h1 className="heading-serif text-vibe-navy font-medium text-xl flex items-center gap-2">
+            {config.emoji} <span className="italic">{config.label}</span> <span className="text-vibe-navy/30 font-sans text-xs tracking-widest uppercase ml-1">Atelier</span>
           </h1>
           <div className="flex items-center gap-1.5 mt-0.5">
-            <Diamond size={10} className="text-vibe-primary" />
-            <span className="text-white/30 text-[10px] font-bold uppercase tracking-widest">5 Diamonds Service</span>
+            <Diamond size={10} className="text-vibe-gold fill-vibe-gold" />
+            <span className="text-vibe-navy/40 text-[10px] font-black uppercase tracking-widest italic">Premium Analysis</span>
           </div>
         </div>
       </header>
@@ -141,8 +141,8 @@ function CaptureContent() {
         </AnimatePresence>
       </main>
 
-      <footer className="p-8 text-center text-white/10 text-[9px] font-bold tracking-[0.4em] uppercase">
-        Digital Renaissance by VibeBeauty
+      <footer className="p-8 text-center text-vibe-navy/10 text-[9px] font-black tracking-[0.4em] uppercase">
+        L'Atelier de Vibe • Digital Renaissance
       </footer>
     </div>
   )
